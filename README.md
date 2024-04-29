@@ -15,6 +15,75 @@
 - [Contribution](#contribution)
 - [Help and Support](#help-and-support)
 
+---
+Mengke Notes;
+1. Install Docker
+```bash
+# list running dockers
+docker ps
+
+# pull docker image from docker hub
+docker pull hello-world
+docker run hello-world
+
+# build docker image
+docker build -t my-image .
+
+# run a container w a specific port mapping
+docker run -d -p 8080:80 my-image
+
+# view container logs
+docker logs container_id
+
+# stop/remove container logs
+docker stop container_id #stop container
+docker rm container_id # remove stopped container
+
+# restart docker command
+docker restart container_id [container...]
+
+# stop the running docker compose services
+docker-compose down
+
+# make changes to docker-compose.yaml and start the docker services
+docker-compose up -d
+
+```
+
+1. Run Ollama on docker as required
+```bash
+[API_ENDPOINTS]
+SEARXNG = "http://localhost:32768" # SearxNG API URL
+OLLAMA = "" # Ollama API URL - http://host.docker.internal:11434
+```
+1. open http://127.0.0.1:3002/ since updated docker-compose.yaml
+```bash
+  perplexica-frontend:
+    build:
+      context: .
+      dockerfile: app.dockerfile
+      args:
+        - NEXT_PUBLIC_API_URL=http://127.0.0.1:3001/api
+        - NEXT_PUBLIC_WS_URL=ws://127.0.0.1:3001
+    depends_on:
+      - perplexica-backend
+    expose:
+      - 3002
+    ports:
+      - 3002:3000
+    networks:
+      - perplexica-network
+```
+
+
+
+
+
+
+
+
+---
+
 ## Overview
 
 Perplexica is an open-source AI-powered searching tool or an AI-powered search engine that goes deep into the internet to find answers. Inspired by Perplexity AI, it's an open-source option that not just searches the web but understands your questions. It uses advanced machine learning algorithms like similarity searching and embeddings to refine results and provides clear answers with sources cited.
