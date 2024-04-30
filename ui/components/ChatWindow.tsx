@@ -15,9 +15,12 @@ export type Message = {
 };
 
 const useSocket = (url: string) => {
+  console.log('[DEBUG] connecting to ' + url);
+
   const [ws, setWs] = useState<WebSocket | null>(null);
 
   useEffect(() => {
+    console.log('[DEBUG] connecting to ' + url + 'started');
     if (!ws) {
       const ws = new WebSocket(url);
       ws.onopen = () => {
@@ -27,11 +30,13 @@ const useSocket = (url: string) => {
     }
 
     return () => {
+      console.log('[DEBUG] closing');
       ws?.close();
       console.log('[DEBUG] closed');
     };
   }, [ws, url]);
 
+  console.log('[DEBUG] connecting to ' + url + 'ended');
   return ws;
 };
 

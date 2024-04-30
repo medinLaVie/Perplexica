@@ -25,6 +25,7 @@ export const handleConnection = async (ws: WebSocket) => {
         data: 'Invalid LLM or embeddings model selected',
       }),
     );
+    console.log('Invalid LLM or embeddings model selected');
     ws.close();
   }
 

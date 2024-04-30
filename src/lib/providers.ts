@@ -6,6 +6,8 @@ import { getOllamaApiEndpoint, getOpenaiApiKey } from '../config';
 export const getAvailableProviders = async () => {
   const openAIApiKey = getOpenaiApiKey();
   const ollamaEndpoint = getOllamaApiEndpoint();
+  console.log('openAIApiKey: ', openAIApiKey);
+  console.log('ollamaEndpoint: ', ollamaEndpoint);
 
   const models = {};
 
@@ -34,7 +36,17 @@ export const getAvailableProviders = async () => {
 
   if (ollamaEndpoint) {
     try {
+      console.log('Loading Ollama models...' + `${ollamaEndpoint}/api/tags`);
+
+
       const response = await fetch(`${ollamaEndpoint}/api/tags`);
+
+
+      if (!response.ok) {
+        throw new Error(
+          `HTTP Error loading Ollama models: ${response.statusText}`,
+        );
+      }
 
       const { models: ollamaModels } = (await response.json()) as any;
 
